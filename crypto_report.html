@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Анализ криптовалют - Стратегия Аллигатор-Фрактал</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(-20px, -30px) rotate(1deg); }
+            66% { transform: translate(20px, -20px) rotate(-1deg); }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .report-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .stat-value.highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .no-signals {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border: 2px solid #fca5a5;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .no-signals::before {
+            content: '❌';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 100px;
+            opacity: 0.1;
+            transform: rotate(-15deg);
+        }
+
+        .no-signals h2 {
+            color: #dc2626;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .no-signals p {
+            color: #7f1d1d;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .criteria-list {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-radius: 16px;
+            padding: 30px;
+            margin: 40px 0;
+        }
+
+        .criteria-list h3 {
+            color: #16a34a;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .criteria-list ol {
+            list-style: none;
+            counter-reset: criteria;
+        }
+
+        .criteria-list li {
+            counter-increment: criteria;
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 15px;
+            color: #15803d;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .criteria-list li::before {
+            content: counter(criteria);
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 35px;
+            height: 35px;
+            background: #22c55e;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(34, 197, 94, 0.3);
+        }
+
+        .recommendation {
+            background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 40px;
+            border-left: 4px solid #8b5cf6;
+        }
+
+        .recommendation h3 {
+            color: #6d28d9;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .recommendation p {
+            color: #4c1d95;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .timestamp {
+            text-align: center;
+            color: #9ca3af;
+            font-size: 0.9rem;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            font-size: 1.5rem;
+        }
+
+        .icon-chart {
+            background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
+        }
+
+        @media (max-width: 768px) {
+            .report-card {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="report-card">
+            <div class="header">
+                <h1>📈 Анализ криптовалют</h1>
+                <div class="subtitle">Стратегия Аллигатор-Фрактал</div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Дата анализа</div>
+                    <div class="stat-value">20.08.2025</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Биржа</div>
+                    <div class="stat-value highlight">BINANCE</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Таймфрейм</div>
+                    <div class="stat-value">4H</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Проанализировано</div>
+                    <div class="stat-value">30</div>
+                </div>
+            </div>
+
+            <div class="no-signals">
+                <h2>❌ Сигналы не найдены</h2>
+                <p>На текущий момент ни одна из проанализированных криптовалют не соответствует всем критериям стратегии</p>
+            </div>
+
+            <div class="criteria-list">
+                <h3>
+                    <span class="icon icon-chart">✅</span>
+                    Критерии стратегии
+                </h3>
+                <ol>
+                    <li>Линии аллигатора должны переплестись</li>
+                    <li>Должен появиться фрактал, где ни одна из пяти свечей не касается линий аллигатора</li>
+                    <li>Должен произойти пробой фрактала зелёной свечой (для лонга) или красной (для шорта)</li>
+                    <li>Между пробойной свечой и фракталом ни одна свеча не должна касаться линий аллигатора</li>
+                </ol>
+            </div>
+
+            <div class="recommendation">
+                <h3>💡 Рекомендация</h3>
+                <p>Дождитесь формирования подходящих условий на рынке. Стратегия требует терпения и дисциплины для получения качественных сигналов.</p>
+            </div>
+
+            <div class="timestamp">
+                Последнее обновление: 20 августа 2025, 21:10:50
+            </div>
+        </div>
+    </div>
+</body>
+</html>
