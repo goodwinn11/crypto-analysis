@@ -43,7 +43,7 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
             position: relative;
             z-index: 2;
@@ -58,6 +58,7 @@
                 0 20px 60px rgba(0, 0, 0, 0.3),
                 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
             animation: slideUp 0.6s ease-out;
+            margin-bottom: 30px;
         }
 
         @keyframes slideUp {
@@ -106,182 +107,279 @@
             font-weight: 500;
         }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin: 40px 0;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+        .time-analysis {
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            border-radius: 16px;
             padding: 20px;
-            border-radius: 16px;
+            margin-bottom: 30px;
             text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: #6b7280;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
-        }
-
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #1f2937;
-        }
-
-        .stat-value.highlight {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .no-signals {
-            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
-            border: 2px solid #fca5a5;
-            border-radius: 16px;
-            padding: 30px;
-            margin: 40px 0;
-            text-align: center;
+            border: 1px solid rgba(102, 126, 234, 0.2);
             position: relative;
             overflow: hidden;
         }
 
-        .no-signals::before {
-            content: '❌';
+        .time-analysis::before {
+            content: '🕐';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 60px;
+            opacity: 0.05;
+            transform: rotate(15deg);
+        }
+
+        .time-analysis-text {
+            font-size: 1.1rem;
+            color: #374151;
+            font-weight: 600;
+        }
+
+        .analysis-section {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .analysis-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .analysis-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .section-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            font-weight: 700;
+            margin-right: 12px;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-content {
+            padding-left: 44px;
+            color: #4b5563;
+            line-height: 1.8;
+        }
+
+        .section-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .section-content li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+            transition: transform 0.2s ease;
+        }
+
+        .section-content li:hover {
+            transform: translateX(5px);
+        }
+
+        .section-content li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: 700;
+        }
+
+        .highlight-text {
+            color: #059669;
+            font-weight: 600;
+        }
+
+        .warning-text {
+            color: #dc2626;
+            font-weight: 600;
+        }
+
+        .trend-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .trend-up {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            color: #15803d;
+        }
+
+        .trend-down {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            color: #991b1b;
+        }
+
+        .recommendation-section {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 2px solid #86efac;
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .recommendation-section::before {
+            content: '💡';
             position: absolute;
             top: -20px;
             right: -20px;
             font-size: 100px;
             opacity: 0.1;
-            transform: rotate(-15deg);
         }
 
-        .no-signals h2 {
-            color: #dc2626;
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .no-signals p {
-            color: #7f1d1d;
-            font-size: 1.1rem;
-            line-height: 1.6;
-        }
-
-        .signal-card {
-            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-            border-radius: 16px;
-            padding: 20px;
-            margin: 20px 0;
-            border-left: 4px solid #22c55e;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .signal-card:hover {
-            transform: translateX(5px);
-            box-shadow: 0 10px 30px rgba(34, 197, 94, 0.2);
-        }
-
-        .signal-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .signal-coin {
-            font-size: 1.3rem;
+        .recommendation-title {
+            font-size: 1.5rem;
             font-weight: 700;
             color: #15803d;
-        }
-
-        .signal-type {
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .signal-type.long {
-            background: #22c55e;
-            color: white;
-        }
-
-        .signal-type.short {
-            background: #ef4444;
-            color: white;
-        }
-
-        .signal-details {
-            display: grid;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .signal-detail {
+            margin-bottom: 20px;
             display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(34, 197, 94, 0.2);
-            flex-wrap: wrap;
+            align-items: center;
             gap: 10px;
         }
 
-        .signal-detail:last-child {
-            border-bottom: none;
+        .trade-params {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
         }
 
-        .signal-label {
+        .trade-param {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .trade-param:hover {
+            transform: scale(1.05);
+        }
+
+        .param-label {
+            font-size: 0.85rem;
             color: #6b7280;
-            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
         }
 
-        .signal-value {
-            font-weight: 600;
+        .param-value {
+            font-size: 1.3rem;
+            font-weight: 700;
             color: #1f2937;
-            text-align: right;
         }
 
-        .timestamp {
-            text-align: center;
-            color: #9ca3af;
+        .param-value.entry {
+            color: #3b82f6;
+        }
+
+        .param-value.stop-loss {
+            color: #ef4444;
+        }
+
+        .param-value.take-profit {
+            color: #10b981;
+        }
+
+        .signal-type-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
             font-size: 0.9rem;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #e5e7eb;
+            animation: pulse 2s infinite;
         }
 
-        .icon {
+        .signal-long {
+            background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+            color: white;
+        }
+
+        .signal-short {
+            background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+            color: white;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+
+        .volume-indicator {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            font-size: 1.5rem;
+            gap: 5px;
+            padding: 5px 10px;
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: 8px;
+            color: #92400e;
+            font-weight: 600;
+            font-size: 0.9rem;
         }
 
-        .icon-chart {
-            background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
+        .fractal-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin: 0 5px;
+        }
+
+        .fractal-up {
+            background: linear-gradient(135deg, #ddd6fe 0%, #c4b5fd 100%);
+            color: #5b21b6;
+        }
+
+        .fractal-down {
+            background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%);
+            color: #9a3412;
         }
 
         @media (max-width: 768px) {
@@ -295,65 +393,92 @@
             }
             
             h1 {
-                font-size: 1.6rem;
+                font-size: 1.8rem;
             }
             
             .subtitle {
                 font-size: 0.95rem;
             }
             
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
-            }
-            
-            .stat-card {
-                padding: 15px;
-            }
-            
-            .stat-value {
-                font-size: 1.5rem;
-            }
-            
-            .no-signals {
+            .analysis-section {
                 padding: 20px;
+                margin-bottom: 15px;
             }
             
-            .no-signals h2 {
-                font-size: 1.4rem;
-            }
-            
-            .no-signals p {
-                font-size: 1rem;
-            }
-            
-            .signal-card {
-                padding: 15px;
-            }
-            
-            .signal-coin {
+            .section-title {
                 font-size: 1.1rem;
             }
             
-            .signal-detail {
-                font-size: 0.9rem;
+            .section-content {
+                padding-left: 0;
+                margin-top: 15px;
+            }
+            
+            .section-number {
+                width: 28px;
+                height: 28px;
+                font-size: 0.8rem;
+            }
+            
+            .trade-params {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .recommendation-section {
+                padding: 20px;
+            }
+            
+            .recommendation-title {
+                font-size: 1.2rem;
+            }
+            
+            .signal-type-badge {
+                position: static;
+                display: inline-block;
+                margin-top: 15px;
+            }
+            
+            .time-analysis {
+                padding: 15px;
+            }
+            
+            .time-analysis-text {
+                font-size: 1rem;
             }
         }
 
-        .pulse {
-            animation: pulse 2s infinite;
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .section-title {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .section-number {
+                margin-bottom: 5px;
+            }
+            
+            .param-value {
+                font-size: 1.1rem;
+            }
         }
 
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
-            }
-            70% {
-                box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
-            }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
     </style>
 </head>
@@ -361,39 +486,127 @@
     <div class="container">
         <div class="report-card">
             <div class="header">
-                <h1>📈 Анализ криптовалют</h1>
+                <h1>📈 Анализ BTC/USDT</h1>
                 <div class="subtitle">Стратегия Аллигатор-Фрактал</div>
             </div>
 
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-label">Дата анализа</div>
-                    <div class="stat-value">20.08.2025</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Биржа</div>
-                    <div class="stat-value highlight">BINANCE</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Таймфрейм</div>
-                    <div class="stat-value">4H</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Проанализировано</div>
-                    <div class="stat-value">30</div>
+            <div class="time-analysis">
+                <div class="time-analysis-text">
+                    Время анализа: 11 августа 2025, 16:34 CEST
                 </div>
             </div>
 
-            <div class="no-signals">
-                <h2>❌ Сигналы не найдены</h2>
-                <p>На текущий момент ни одна из проанализированных криптовалют не соответствует всем критериям стратегии</p>
-                <p style="margin-top: 15px; font-size: 0.95rem; color: #991b1b;">
-                    ⚠️ Используйте найденные сигналы как основу для дальнейшего анализа. Всегда применяйте риск-менеджмент и не рискуйте более 2% от депозита на одну сделку.
-                </p>
+            <div class="analysis-section">
+                <div class="section-title">
+                    <span class="section-number">1</span>
+                    Положение линий
+                </div>
+                <div class="section-content">
+                    <ul>
+                        <li>Lips (зелёная) выше Teeth (красная), а Teeth выше Jaw (синяя) <span class="trend-badge trend-up">восходящий тренд</span></li>
+                        <li>Расстояние между линиями увеличено → тренд в активной фазе <span class="highlight-text">«аллигатор ест»</span></li>
+                    </ul>
+                </div>
             </div>
 
-            <div class="timestamp">
-                Последнее обновление: 20 августа 2025, 21:10:50
+            <div class="analysis-section">
+                <div class="section-title">
+                    <span class="section-number">2</span>
+                    Фаза рынка
+                </div>
+                <div class="section-content">
+                    <ul>
+                        <li>Пробуждение произошло после короткой фазы сна (переплетение) примерно <span class="highlight-text">2 дня назад</span></li>
+                        <li>Сейчас — <span class="highlight-text">середина активной фазы</span> тренда</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="analysis-section">
+                <div class="section-title">
+                    <span class="section-number">3</span>
+                    Цена относительно Alligator
+                </div>
+                <div class="section-content">
+                    <ul>
+                        <li>Цена находится <span class="highlight-text">значительно выше</span> всех трёх линий → сильное доминирование покупателей</li>
+                        <li>После резкого роста наблюдается <span class="warning-text">коррекционная свеча вниз</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="analysis-section">
+                <div class="section-title">
+                    <span class="section-number">4</span>
+                    Фракталы
+                </div>
+                <div class="section-content">
+                    <ul>
+                        <li>Последний подтверждённый <span class="fractal-badge fractal-up">верхний фрактал</span> пробит вверх, что стало триггером текущего роста</li>
+                        <li>Ближайший <span class="fractal-badge fractal-down">нижний фрактал</span> может служить ориентиром для стоп-лосса</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="analysis-section">
+                <div class="section-title">
+                    <span class="section-number">5</span>
+                    Объёмы
+                </div>
+                <div class="section-content">
+                    <ul>
+                        <li>В момент импульсного роста — <span class="volume-indicator">📊 всплеск объёма</span>, подтверждающий силу пробоя</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="analysis-section">
+                <div class="section-title">
+                    <span class="section-number">6</span>
+                    Сигнал
+                    <span class="signal-type-badge signal-long">LONG</span>
+                </div>
+                <div class="section-content">
+                    <ul>
+                        <li>Сигнал на <span class="highlight-text">продолжение лонга</span> сохраняется, пока линии Alligator не начинают сближаться</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="recommendation-section">
+                <div class="recommendation-title">
+                    <span>7.</span> Рекомендации
+                </div>
+                <div class="trade-params">
+                    <div class="trade-param">
+                        <div class="param-label">Entry (Вход)</div>
+                        <div class="param-value entry">118 800–119 200 USDT</div>
+                        <div style="font-size: 0.8rem; color: #6b7280; margin-top: 5px;">
+                            После коррекционного отката к губам Alligator
+                        </div>
+                    </div>
+                    <div class="trade-param">
+                        <div class="param-label">Stop Loss</div>
+                        <div class="param-value stop-loss">< 117 700 USDT</div>
+                        <div style="font-size: 0.8rem; color: #6b7280; margin-top: 5px;">
+                            Под Jaw + последний нижний фрактал
+                        </div>
+                    </div>
+                    <div class="trade-param">
+                        <div class="param-label">Take Profit 1</div>
+                        <div class="param-value take-profit">121 800 USDT</div>
+                        <div style="font-size: 0.8rem; color: #6b7280; margin-top: 5px;">
+                            Предыдущий хай импульса
+                        </div>
+                    </div>
+                    <div class="trade-param">
+                        <div class="param-label">Take Profit 2</div>
+                        <div class="param-value take-profit">123 500 USDT</div>
+                        <div style="font-size: 0.8rem; color: #6b7280; margin-top: 5px;">
+                            Расширение по ходу тренда
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
