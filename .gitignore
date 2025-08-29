@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+*.json
+signal_app.py
+signal_server.py
+update_signals_demo.py
+generate_signals_web.py
+live_signals.html
